@@ -20,7 +20,20 @@ Works with `yml`, `ini`, and `json`.
 Getting Started
 ---------------
 
-Coming Soon!
+``` php
+<?php
+
+use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\Config\FileLocator;
+use Tacker\Loader\JsonFileLoader;
+use Tacker\Normalizer\ChainNormalizer;
+
+$resources = new ResourceCollection;
+$loader = new JsonFileLoader(new ChainNormalizer, new FileLocator, $resources);
+
+$configurator = new Configurator(new LoaderResolver(array($loader)), $resources);
+$configurator->configure(new Pimple);
+```
 
 Tests
 -----
