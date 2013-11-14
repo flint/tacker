@@ -2,10 +2,12 @@
 
 namespace Tacker\Normalizer;
 
+use Tacker\Normalizer;
+
 /**
  * @package Tacker
  */
-class ChainNormalizer implements Tacker\Normalizer
+class ChainNormalizer implements \Tacker\Normalizer
 {
     protected $normalizers = array();
 

@@ -5,7 +5,7 @@ namespace Tacker\Normalizer;
 /**
  * @package Tacker
  */
-class EnvironmentNormalizer implements NormalizerInterface
+class EnvironmentNormalizer implements \Tacker\Normalizer
 {
     const PLACEHOLDER = '{##|#([A-Z0-9_]+)#}';
 

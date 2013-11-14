@@ -5,7 +5,7 @@ namespace Tacker\Normalizer;
 /**
  * @package Tacker
  */
-class PimpleNormalizer implements Normalizer
+class PimpleNormalizer implements \Tacker\Normalizer
 {
     const PLACEHOLDER = '{%%|%([a-z0-9_.]+)%}';
 

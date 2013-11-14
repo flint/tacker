@@ -2,6 +2,10 @@
     "name" : "tacker/tacker",
     "license" : "MIT",
 
+    "autoload" : {
+        "psr-0" : { "Tacker\\" : "src" }
+    },
+
     "require" : {
         "php"            : ">=5.3.3",
         "pimple/pimple"  : "~1.0",
