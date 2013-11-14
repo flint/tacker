@@ -28,6 +28,25 @@ class EnvironmentNormalizer implements \Tacker\Normalizer
             return '##';
         }
 
-        return getenv($matches[1]);
+        return $this->scalarToString(getenv($matches[1]));
+    }
+
+    /**
+     * @param  mixed $value
+     * @return mixed
+     */
+    protected function scalarToString($value)
+    {
+        switch (gettype($value)) {
+            case 'resource':
+            case 'object':
+                throw new \RuntimeException('Unable to replace placeholder if its replacement is an object or resource.');
+            case 'boolean':
+                return $value ? 'true' : 'false';
+            case 'NULL':
+                return 'null';
+            default:
+                return (string) $value;
+        }
     }
 }
