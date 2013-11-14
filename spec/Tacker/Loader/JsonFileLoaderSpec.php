@@ -5,7 +5,7 @@ namespace spec\Tacker\Loader;
 use Prophecy\Argument;
 use Symfony\Component\Config\FileLocator;
 
-class IniFileLoaderSpec extends \PhpSpec\ObjectBehavior
+class JsonFileLoaderSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Tacker\Normalizer $normalizer
@@ -13,7 +13,7 @@ class IniFileLoaderSpec extends \PhpSpec\ObjectBehavior
      */
     function let($normalizer, $resources)
     {
-        $locator = new FileLocator(array(__DIR__ . '/../Fixtures/ini'));
+        $locator = new FileLocator(array(__DIR__ . '/../Fixtures/json'));
 
         $this->beConstructedWith($normalizer, $locator, $resources);
     }
@@ -23,7 +23,7 @@ class IniFileLoaderSpec extends \PhpSpec\ObjectBehavior
         $normalizer->normalize(Argument::any())->shouldBeCalled()
             ->willReturnArgument();
 
-        $this->load('config.ini')->shouldReturn(array(
+        $this->load('config.json')->shouldReturn(array(
             'hello' => 'world',
         ));
     }
@@ -32,7 +32,7 @@ class IniFileLoaderSpec extends \PhpSpec\ObjectBehavior
     {
         $normalizer->normalize(Argument::any())->willReturnArgument();
 
-        $this->load('inherit.ini')->shouldReturn(array(
+        $this->load('inherit.json')->shouldReturn(array(
             'hello' => 'world',
         ));
     }
