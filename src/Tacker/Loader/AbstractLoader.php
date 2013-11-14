@@ -4,6 +4,7 @@ namespace Tacker\Loader;
 
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Config\Resource\FileResource;
 use Tacker\Normalizer;
 use Tacker\ResourceCollection;
 

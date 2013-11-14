@@ -1,5 +1,5 @@
 {
-    "name" : "tacker/tacker",
+    "name"    : "flint/tacker",
     "license" : "MIT",
 
     "autoload" : {
