@@ -2,24 +2,23 @@
 
 namespace spec\Tacker\Loader;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Symfony\Component\Config\FileLocator;
 
-class IniFileLoaderSpec extends ObjectBehavior
+class IniFileLoaderSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Tacker\Normalizer $normalizer
-     * @param Symfony\Component\Config\FileLocatorInterface $locator
      * @param Tacker\ResourceCollection $resources
      */
-    function let($normalizer, $locator, $resources)
+    function let($normalizer, $resources)
     {
+        $locator = new FileLocator(array(__DIR__ . '/../Fixtures'));
+
         $this->beConstructedWith($normalizer, $locator, $resources);
     }
 
-    function it_normalizes_ini_files_when_loading($normalizer, $locator, $resources)
+    function it_normalizes_ini_files_when_loading($normalizer, $resources)
     {
-        $locator->locate('config.ini')->willReturn(__DIR__ . '/../Fixtures/config.ini');
         $normalizer->normalize('hello = "world"' . "\n")->willReturn('hello = "jupiter"');
 
         $this->load('config.ini')->shouldReturn(array(
@@ -27,12 +26,16 @@ class IniFileLoaderSpec extends ObjectBehavior
         ));
     }
 
-    function it_does_not_support_inherited_configs($locator)
+    function it__supports_inherited_configs($normalizer)
     {
-        $locator->locate('inherit.ini')->shouldNotBeCalled();
-        $locator->locate('config.ini')->shouldBeCalled()
-            ->willReturn(__DIR__ . '/../Fixtures/config.ini');
+        $normalizer->normalize('@import = "config.ini"' . "\n")->shouldBeCalled()
+            ->willReturn('@import = "config.ini"');
 
-        $this->load('config.ini')->shouldReturn(array());
+        $normalizer->normalize('hello = "world"' . "\n")->shouldBeCalled()
+            ->willReturn('hello = "world"');
+
+        $this->load('inherit.ini')->shouldReturn(array(
+            'hello' => 'world',
+        ));
     }
 }
