@@ -17,16 +17,16 @@ Works with `yml`, `ini`, and `json`.
  * Simple for all users of Pimple such as `Silex`, `Flint`.
  * Only dependant on Pimple and Symfony Config.
 
- Getting Started
- ---------------
+Getting Started
+---------------
 
- Coming Soon!
+Coming Soon!
 
- Tests
- -----
+Tests
+-----
 
- Tacker is spec tested with PhpSpec. You run the tests with:
+Tacker is spec tested with PhpSpec. You run the tests with:
 
- ``` bash
- $ ./vendor/bin/phpspec run
- ```
+``` bash
+$ ./vendor/bin/phpspec run
+```
