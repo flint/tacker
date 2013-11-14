@@ -2,10 +2,7 @@
 
 namespace spec\Tacker\Normalizer;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
-class EnvironmentNormalizerSpec extends ObjectBehavior
+class EnvironmentNormalizerSpec extends \PhpSpec\ObjectBehavior
 {
     function it_replaces_placeholders()
     {

@@ -2,10 +2,7 @@
 
 namespace spec\Tacker\Normalizer;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
-class ChainNormalizerSpec extends ObjectBehavior
+class ChainNormalizerSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Tacker\Normalizer $first

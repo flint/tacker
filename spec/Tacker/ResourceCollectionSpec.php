@@ -2,10 +2,7 @@
 
 namespace spec\Tacker;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
-class ResourceCollectionSpec extends ObjectBehavior
+class ResourceCollectionSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Symfony\Component\Config\Resource\DirectoryResource $directory

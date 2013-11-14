@@ -2,10 +2,7 @@
 
 namespace spec\Tacker\Normalizer;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
-class PimpleNormalizerSpec extends ObjectBehavior
+class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Pimple $pimple
