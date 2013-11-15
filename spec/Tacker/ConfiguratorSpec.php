@@ -2,18 +2,39 @@
 
 namespace spec\Tacker;
 
+use Prophecy\Argument;
+
 class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Symfony\Component\Config\Loader\LoaderInterface $loader
+     * @param Tacker\ResourceCollection $resources
      * @param Pimple $pimple
      */
-    function let($loader, $pimple)
+    function let($loader, $resources, $pimple)
     {
-        $this->beConstructedWith($loader);
+        $this->beConstructedWith($loader, $resources);
 
         // make sure that the directory used for specs are clean
         @array_map('unlink', glob(sys_get_temp_dir() . '/tacker/*'));
+    }
+
+    /**
+     * @param Symfony\Component\Config\Resource\ResourceInterface $resource
+     */
+    function it_reloads_config_when_resources_change_in_debug($resource, $loader, $resources, $pimple)
+    {
+        $this->setDebug(true);
+        $this->setCacheDir(sys_get_temp_dir() . '/tacker');
+
+        $resources->all()->willReturn(array($resource));
+        $resource->isFresh(Argument::any())->willReturn(false);
+
+        $loader->load('debug.json')->willReturn(array('hello' => 'world'))
+            ->shouldBeCalledTimes(2);
+
+        $this->configure($pimple, 'debug.json');
+        $this->configure($pimple, 'debug.json');
     }
 
     function it_caches_config($loader, $pimple)

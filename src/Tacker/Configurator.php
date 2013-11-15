@@ -14,10 +14,12 @@ class Configurator
     protected $debug = false;
     protected $cacheDir;
     protected $loader;
+    protected $resources;
 
-    public function __construct(LoaderInterface $loader)
+    public function __construct(LoaderInterface $loader, ResourceCollection $resources)
     {
         $this->loader = $loader;
+        $this->resources = $resources;
     }
 
     public function getDebug()
@@ -49,7 +51,7 @@ class Configurator
         }
 
         if ($this->cacheDir && isset($parameters)) {
-            $cache->write('<?php $parameters = ' . var_export($parameters, true) . ';', array());
+            $cache->write('<?php $parameters = ' . var_export($parameters, true) . ';', $this->resources->all());
         }
 
         if (!isset($parameters)) {
