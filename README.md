@@ -13,7 +13,7 @@ Works with `yml`, `ini`, and `json`.
 
  * Inherit configurations files by using a special `@import`
  * Mix different configuration formats while using `@import`
- * Read configuration files are cached if a `cache_dir` and `debug` is set.
+ * Read configuration files are cached if a `cache_dir` is set and `debug` is set to false.
  * Simple for all users of Pimple such as `Silex`, `Flint`.
  * Only dependant on Pimple and Symfony Config.
 
