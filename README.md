@@ -42,10 +42,10 @@ use Tacker\Loader\JsonFileLoader;
 use Tacker\Normalizer\ChainNormalizer;
 
 $resources = new ResourceCollection;
-$loader = new JsonFileLoader(new ChainNormalizer, new FileLocator, $resources);
+$loader = new JsonFileLoader(new FileLocator, $resources);
 
-$configurator = new Configurator(new LoaderResolver(array($loader)), $resources);
-$configurator->configure(new Pimple);
+$configurator = new Configurator(new LoaderResolver(array($loader)), new ChainNormalizer, $resources);
+$configurator->configure(new Pimple, 'config.{ini,json,yml}');
 ```
 
 Tests
