@@ -17,6 +17,19 @@ Works with `yml`, `ini`, and `json`.
  * Simple for all users of Pimple such as `Silex`, `Flint`.
  * Only dependant on Pimple and Symfony Config.
 
+Install
+-------
+
+Use composer to install this beautiful library.
+
+``` json
+{
+    "require" : {
+        "flint/tacker" : "~1.0"
+    }
+}
+```
+
 Getting Started
 ---------------
 
