@@ -9,7 +9,7 @@ class IniFileLoader extends AbstractLoader
 {
     protected function read($resource)
     {
-        return parse_ini_string($this->normalizer->normalize(file_get_contents($resource)), true);
+        return parse_ini_file($resource, true);
     }
 
     /**

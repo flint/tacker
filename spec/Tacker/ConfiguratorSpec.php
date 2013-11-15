@@ -8,12 +8,15 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Symfony\Component\Config\Loader\LoaderInterface $loader
+     * @param Tacker\Normalizer $normalizer
      * @param Tacker\ResourceCollection $resources
      * @param Pimple $pimple
      */
-    function let($loader, $resources, $pimple)
+    function let($loader, $normalizer, $resources, $pimple)
     {
-        $this->beConstructedWith($loader, $resources);
+        $normalizer->normalize(Argument::any())->willReturnArgument();
+
+        $this->beConstructedWith($loader, $normalizer, $resources);
 
         // make sure that the directory used for specs are clean
         @array_map('unlink', glob(sys_get_temp_dir() . '/tacker/*'));
@@ -45,6 +48,21 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
             ->shouldBeCalledTimes(1);
 
         $this->configure($pimple, 'config.json');
+        $this->configure($pimple, 'config.json');
+    }
+
+    function it_normalizes_parameters($pimple, $loader, $normalizer)
+    {
+        $loader->load('config.json')->willReturn(array(
+            'moon' => 'universe',
+            'hello' => array(
+                'name' => 'jupiter',
+            ),
+        ));
+
+        $normalizer->normalize('universe')->shouldBeCalled();
+        $normalizer->normalize('jupiter')->shouldBeCalled();
+
         $this->configure($pimple, 'config.json');
     }
 

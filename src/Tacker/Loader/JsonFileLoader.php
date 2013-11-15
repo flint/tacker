@@ -9,7 +9,7 @@ class JsonFileLoader extends AbstractLoader
 {
     protected function read($resource)
     {
-        return json_decode($this->normalizer->normalize(file_get_contents($resource)), true);
+        return json_decode(file_get_contents($resource), true);
     }
 
     /**

@@ -15,10 +15,15 @@ class Configurator
     protected $cacheDir;
     protected $loader;
     protected $resources;
+    protected $normalizer;
 
-    public function __construct(LoaderInterface $loader, ResourceCollection $resources)
-    {
+    public function __construct(
+        LoaderInterface $loader,
+        Normalizer $normalizer,
+        ResourceCollection $resources
+    ) {
         $this->loader = $loader;
+        $this->normalizer = $normalizer;
         $this->resources = $resources;
     }
 
@@ -58,7 +63,7 @@ class Configurator
             require (string) $cache;
         }
 
-        $this->build($pimple, $parameters);
+        $this->build($pimple, $this->normalize($parameters));
     }
 
     protected function build(Pimple $pimple, array $parameters)
@@ -66,5 +71,18 @@ class Configurator
         foreach ($parameters as $k => $v) {
             $pimple->offsetSet($k, $v);
         }
+    }
+
+    protected function normalize(array $parameters)
+    {
+        foreach ($parameters as $k => $v) {
+            if (is_array($v)) {
+                $parameters[$k] = $this->normalize($v);
+            } else {
+                $parameters[$k] = $this->normalizer->normalize($v);
+            }
+        }
+
+        return $parameters;
     }
 }
