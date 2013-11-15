@@ -8,7 +8,7 @@ namespace Tacker;
 interface Normalizer
 {
     /**
-     * @param mixed $value
+     * @param  mixed $value
      * @return mixed
      */
     public function normalize($value);
