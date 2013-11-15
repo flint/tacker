@@ -52,7 +52,7 @@ class Configurator
         $cache = new ConfigCache(sprintf('%s/%s.php', $this->cacheDir, crc32($resource)), $this->debug);
 
         if (!$cache->isFresh()) {
-            $parameters = $this->loader->load($resource);
+            $parameters = $this->normalize($this->loader->load($resource));
         }
 
         if ($this->cacheDir && isset($parameters)) {
@@ -63,7 +63,7 @@ class Configurator
             require (string) $cache;
         }
 
-        $this->build($pimple, $this->normalize($parameters));
+        $this->build($pimple, $parameters);
     }
 
     protected function build(Pimple $pimple, array $parameters)

@@ -40,12 +40,14 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
         $this->configure($pimple, 'debug.json');
     }
 
-    function it_caches_config($loader, $pimple)
+    function it_caches_config($loader, $pimple, $normalizer)
     {
         $this->setCacheDir(sys_get_temp_dir() . '/tacker');
 
-        $loader->load('config.json')->willReturn(array())
+        $loader->load('config.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalledTimes(1);
+
+        $normalizer->normalize('world')->shouldBeCalledTimes(1);
 
         $this->configure($pimple, 'config.json');
         $this->configure($pimple, 'config.json');
