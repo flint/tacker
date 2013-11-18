@@ -2,6 +2,8 @@
 
 namespace spec\Tacker\Normalizer;
 
+use Prophecy\Argument;
+
 class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 {
     /**
@@ -14,6 +16,7 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 
     function it_replaces_placeholders($pimple)
     {
+        $pimple->offsetExists(Argument::any())->willReturn(true);
         $pimple->offsetGet('config.path')->willReturn(__DIR__);
 
         $this->normalize('%config.path%')->shouldReturn(__DIR__);
@@ -22,6 +25,8 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 
     function it_normalizes_complete_matches_to_precise_type($pimple)
     {
+        $pimple->offsetExists(Argument::any())->willReturn(true);
+
         $pimple->offsetGet('config.first')->willReturn(true);
         $pimple->offsetGet('config.second')->willReturn(false);
         $pimple->offsetGet('config.third')->willReturn(null);
@@ -33,8 +38,18 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 
     function it_normalizes_matches_in_strings($pimple)
     {
+        $pimple->offsetExists('path')->willReturn(true);
         $pimple->offsetGet('path')->willReturn('dir');
 
         $this->normalize('something.%path%.name')->shouldReturn('something.dir.name');
+    }
+
+    function it_does_not_replace_non_existant_parameters($pimple)
+    {
+        $pimple->offsetExists('path')->willReturn(false);
+        $pimple->offsetGet('path')->shouldNotBeCalled();
+
+        $this->normalize('%path%')->shouldReturn('%path%');
+        $this->normalize('sub_path_%path%')->shouldReturn('sub_path_%path%');
     }
 }

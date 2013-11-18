@@ -24,7 +24,7 @@ class PimpleNormalizer implements \Tacker\Normalizer
     public function normalize($value)
     {
         if (preg_match('{^%([a-z0-9_.]+)%$}', $value, $match)) {
-            return $this->pimple[$match[1]];
+            return isset($this->pimple[$match[1]]) ? $this->pimple[$match[1]] : $match[0];
         }
 
         return preg_replace_callback('{%%|%([a-z0-9_.]+)%}', array($this, 'callback'), $value);
@@ -40,6 +40,6 @@ class PimpleNormalizer implements \Tacker\Normalizer
             return '%%';
         }
 
-        return $this->pimple[$matches[1]];
+        return isset($this->pimple[$matches[1]]) ? $this->pimple[$matches[1]] : $matches[0];
     }
 }

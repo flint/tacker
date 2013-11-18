@@ -23,9 +23,13 @@ class EnvironmentNormalizer implements \Tacker\Normalizer
     protected function callback($matches)
     {
         if (!isset($matches[1])) {
-            return '##';
+            return $matches[0];
         }
 
-        return getenv($matches[1]);
+        if (false !== $env = getenv($matches[1])) {
+            return $env;
+        };
+
+        return $matches[0];
     }
 }
