@@ -40,6 +40,6 @@ class PimpleNormalizer implements \Tacker\Normalizer
             return '%%';
         }
 
-        return getenv($matches[1]);
+        return $this->pimple[$matches[1]];
     }
 }

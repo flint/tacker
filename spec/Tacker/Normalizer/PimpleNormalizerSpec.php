@@ -20,7 +20,7 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
         $this->normalize('%CONFIG.PATH%')->shouldReturn('%CONFIG.PATH%');
     }
 
-    function it_converts_types_to_strings($pimple)
+    function it_normalizes_complete_matches_to_precise_type($pimple)
     {
         $pimple->offsetGet('config.first')->willReturn(true);
         $pimple->offsetGet('config.second')->willReturn(false);
@@ -29,5 +29,12 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
         $this->normalize('%config.first%')->shouldReturn(true);
         $this->normalize('%config.second%')->shouldReturn(false);
         $this->normalize('%config.third%')->shouldReturn(null);
+    }
+
+    function it_normalizes_matches_in_strings($pimple)
+    {
+        $pimple->offsetGet('path')->willReturn('dir');
+
+        $this->normalize('something.%path%.name')->shouldReturn('something.dir.name');
     }
 }
