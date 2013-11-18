@@ -11,6 +11,8 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
      */
     function let($pimple)
     {
+        $pimple->offsetExists(Argument::any())->willReturn(true);
+
         $this->beConstructedWith($pimple);
     }
 
@@ -25,8 +27,6 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 
     function it_normalizes_complete_matches_to_precise_type($pimple)
     {
-        $pimple->offsetExists(Argument::any())->willReturn(true);
-
         $pimple->offsetGet('config.first')->willReturn(true);
         $pimple->offsetGet('config.second')->willReturn(false);
         $pimple->offsetGet('config.third')->willReturn(null);
@@ -38,7 +38,6 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 
     function it_normalizes_matches_in_strings($pimple)
     {
-        $pimple->offsetExists('path')->willReturn(true);
         $pimple->offsetGet('path')->willReturn('dir');
 
         $this->normalize('something.%path%.name')->shouldReturn('something.dir.name');
