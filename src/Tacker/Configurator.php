@@ -75,13 +75,21 @@ class Configurator
 
     protected function normalize(array $parameters)
     {
-        foreach ($parameters as $k => $v) {
+        $normalizer = $this->normalizer;
+
+        array_walk_recursive($parameters, function (&$value, $index) use ($normalizer) {
+            if (is_string($value)) {
+                $value = $normalizer->normalize($value);
+            }
+        });
+
+        /*foreach ($parameters as $k => $v) {
             if (is_array($v)) {
                 $parameters[$k] = $this->normalize($v);
-            } else {
+            } elseif (is_string($v)) {
                 $parameters[$k] = $this->normalizer->normalize($v);
             }
-        }
+        }*/
 
         return $parameters;
     }

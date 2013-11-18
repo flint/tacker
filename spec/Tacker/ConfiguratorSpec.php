@@ -59,11 +59,15 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
             'moon' => 'universe',
             'hello' => array(
                 'name' => 'jupiter',
+                'even' => array(
+                    'deeper' => 'yeah',
+                ),
             ),
         ));
 
         $normalizer->normalize('universe')->shouldBeCalled();
         $normalizer->normalize('jupiter')->shouldBeCalled();
+        $normalizer->normalize('yeah')->shouldBeCalled();
 
         $this->configure($pimple, 'config.json');
     }
