@@ -5,18 +5,29 @@ namespace Tacker\Normalizer;
 /**
  * @package Tacker
  */
-class PimpleNormalizer extends EnvironmentNormalizer
+class PimpleNormalizer implements \Tacker\Normalizer
 {
-    const PLACEHOLDER = '{%%|%([a-z0-9_.]+)%}';
-
     protected $pimple;
 
     /**
      * @param Pimple $pimple
      */
-    public function __construct(\Pimple $pimple = null)
+    public function __construct(\Pimple $pimple)
     {
         $this->pimple = $pimple;
+    }
+
+    /**
+     * @param  string $value
+     * @return string
+     */
+    public function normalize($value)
+    {
+        if (preg_match('{^%([a-z0-9_.]+)%$}', $value, $match)) {
+            return $this->pimple[$match[1]];
+        }
+
+        return preg_replace_callback('{%%|%([a-z0-9_.]+)%}', array($this, 'callback'), $value);
     }
 
     /**
@@ -29,7 +40,6 @@ class PimpleNormalizer extends EnvironmentNormalizer
             return '%%';
         }
 
-        return $this->scalarToString($this->pimple[$matches[1]]);
+        return getenv($matches[1]);
     }
-
 }

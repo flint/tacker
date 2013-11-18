@@ -26,8 +26,8 @@ class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
         $pimple->offsetGet('config.second')->willReturn(false);
         $pimple->offsetGet('config.third')->willReturn(null);
 
-        $this->normalize('%config.first%')->shouldReturn('true');
-        $this->normalize('%config.second%')->shouldReturn('false');
-        $this->normalize('%config.third%')->shouldReturn('null');
+        $this->normalize('%config.first%')->shouldReturn(true);
+        $this->normalize('%config.second%')->shouldReturn(false);
+        $this->normalize('%config.third%')->shouldReturn(null);
     }
 }

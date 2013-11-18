@@ -7,15 +7,13 @@ namespace Tacker\Normalizer;
  */
 class EnvironmentNormalizer implements \Tacker\Normalizer
 {
-    const PLACEHOLDER = '{##|#([A-Z0-9_]+)#}';
-
     /**
      * @param  string $value
      * @return string
      */
     public function normalize($value)
     {
-        return preg_replace_callback(static::PLACEHOLDER, array($this, 'callback'), $value);
+        return preg_replace_callback('{##|#([A-Z0-9_]+)#}', array($this, 'callback'), $value);
     }
 
     /**
@@ -28,25 +26,6 @@ class EnvironmentNormalizer implements \Tacker\Normalizer
             return '##';
         }
 
-        return $this->scalarToString(getenv($matches[1]));
-    }
-
-    /**
-     * @param  mixed $value
-     * @return mixed
-     */
-    protected function scalarToString($value)
-    {
-        switch (gettype($value)) {
-            case 'resource':
-            case 'object':
-                throw new \RuntimeException('Unable to replace placeholder if its replacement is an object or resource.');
-            case 'boolean':
-                return $value ? 'true' : 'false';
-            case 'NULL':
-                return 'null';
-            default:
-                return (string) $value;
-        }
+        return getenv($matches[1]);
     }
 }
