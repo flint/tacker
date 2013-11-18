@@ -83,14 +83,6 @@ class Configurator
             }
         });
 
-        /*foreach ($parameters as $k => $v) {
-            if (is_array($v)) {
-                $parameters[$k] = $this->normalize($v);
-            } elseif (is_string($v)) {
-                $parameters[$k] = $this->normalizer->normalize($v);
-            }
-        }*/
-
         return $parameters;
     }
 }
