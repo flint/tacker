@@ -6,7 +6,7 @@ Tacker
 Tacker is a config component that binds Symfony Config together into
 a reuseable config loader for Pimple.
 
-[![Build Status](https://travis-ci.org/henrikbjorn/Tacker.png?branch=master)](https://travis-ci.org/henrikbjorn/Tacker)
+[![Build Status](https://travis-ci.org/flint/tacker.png?branch=master)](https://travis-ci.org/flint/tacker)
 
 Features
 --------
