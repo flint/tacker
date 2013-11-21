@@ -50,6 +50,25 @@ $configurator = new Configurator(new LoaderResolver(array($loader)), new ChainNo
 $configurator->configure(new Pimple, 'config.{ini,json,yml}');
 ```
 
+### Replacing Values
+
+Tacker comes with support for replacing values from environment value and/or Pimple services.
+
+For environment variables it matches `#CAPITALIZED_NAME#` and for Pimple it matches `%service.name%`.
+
+``` php
+<?php
+
+use Tacker\Normalizer\EnvironmentNormalizer;
+use Tacker\Normalizer\PimpleNormalizer;
+use Tacker\Normalizer\ChainNormalizer;
+
+$normalizer = new ChainNormalizer(array(
+    new EnvironmentNormalizer,
+    new PimpleNormalizer(new Pimple),
+));
+```
+
 Tests
 -----
 
