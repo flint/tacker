@@ -6,7 +6,7 @@ Tacker
 Tacker is a config component that binds Symfony Config together into
 a reuseable config loader for Pimple.
 
-[![Build Status](https://travis-ci.org/henrikbjorn/Tacker.png?branch=master)](https://travis-ci.org/henrikbjorn/Tacker)
+[![Build Status](https://travis-ci.org/flint/tacker.png?branch=master)](https://travis-ci.org/flint/tacker)
 
 Features
 --------
@@ -48,6 +48,25 @@ $loader = new JsonFileLoader(new FileLocator, $resources);
 
 $configurator = new Configurator(new LoaderResolver(array($loader)), new ChainNormalizer, $resources);
 $configurator->configure(new Pimple, 'config.{ini,json,yml}');
+```
+
+### Replacing Values
+
+Tacker comes with support for replacing values from environment value and/or Pimple services.
+
+For environment variables it matches `#CAPITALIZED_NAME#` and for Pimple it matches `%service.name%`.
+
+``` php
+<?php
+
+use Tacker\Normalizer\EnvironmentNormalizer;
+use Tacker\Normalizer\PimpleNormalizer;
+use Tacker\Normalizer\ChainNormalizer;
+
+$normalizer = new ChainNormalizer(array(
+    new EnvironmentNormalizer,
+    new PimpleNormalizer(new Pimple),
+));
 ```
 
 Tests
