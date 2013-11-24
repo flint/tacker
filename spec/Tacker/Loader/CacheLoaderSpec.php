@@ -1,31 +1,33 @@
 <?php
 
-namespace spec\Tacker;
+namespace spec\Tacker\Loader;
 
 use Prophecy\Argument;
 
-class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
+class CacheLoaderSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Symfony\Component\Config\Loader\LoaderInterface $loader
      * @param Tacker\Normalizer $normalizer
      * @param Tacker\ResourceCollection $resources
-     * @param Pimple $pimple
      */
-    function let($loader, $normalizer, $resources, $pimple)
+    function let($loader, $resources)
     {
-        $normalizer->normalize(Argument::any())->willReturnArgument();
-
-        $this->beConstructedWith($loader, $normalizer, $resources);
+        $this->beConstructedWith($loader, $resources);
 
         // make sure that the directory used for specs are clean
         @array_map('unlink', glob(sys_get_temp_dir() . '/tacker/*'));
     }
 
+    function it_is_symfony_loader()
+    {
+        $this->shouldHaveType('Symfony\Component\Config\Loader\Loader');
+    }
+
     /**
      * @param Symfony\Component\Config\Resource\ResourceInterface $resource
      */
-    function it_reloads_config_when_resources_change_in_debug($resource, $loader, $resources, $pimple)
+    function it_reloads_config_when_resources_change_in_debug($resource, $loader, $resources)
     {
         $this->setDebug(true);
         $this->setCacheDir(sys_get_temp_dir() . '/tacker');
@@ -36,8 +38,8 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
         $loader->load('debug.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalledTimes(2);
 
-        $this->configure($pimple, 'debug.json');
-        $this->configure($pimple, 'debug.json');
+        $this->load('debug.json');
+        $this->load('debug.json');
     }
 
     function it_caches_config($loader, $pimple, $normalizer)
@@ -47,39 +49,18 @@ class ConfiguratorSpec extends \PhpSpec\ObjectBehavior
         $loader->load('config.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalledTimes(1);
 
-        $normalizer->normalize('world')->shouldBeCalledTimes(1);
-
-        $this->configure($pimple, 'config.json');
-        $this->configure($pimple, 'config.json');
+        $this->load('config.json');
+        $this->load('config.json');
     }
 
-    function it_normalizes_parameters($pimple, $loader, $normalizer)
-    {
-        $loader->load('config.json')->willReturn(array(
-            'moon' => 'universe',
-            'hello' => array(
-                'name' => 'jupiter',
-                'even' => array(
-                    'deeper' => 'yeah',
-                ),
-            ),
-        ));
-
-        $normalizer->normalize('universe')->shouldBeCalled();
-        $normalizer->normalize('jupiter')->shouldBeCalled();
-        $normalizer->normalize('yeah')->shouldBeCalled();
-
-        $this->configure($pimple, 'config.json');
-    }
-
-    function it_loads_config_file($loader, $pimple)
+    function it_loads_config_file($loader)
     {
         $loader->load('config.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalled();
 
-        $pimple->offsetSet('hello', 'world')->shouldBeCalled();
-
-        $this->configure($pimple, 'config.json');
+        $this->load('config.json')->shouldReturn(array(
+            'hello' => 'world',
+        ));
     }
 
     function it_allows_setting_debug_and_cache_dir()

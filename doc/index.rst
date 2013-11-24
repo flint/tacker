@@ -35,18 +35,27 @@ Getting Started
 
 .. code-block:: php
 
-  <?php
-  
-  use Symfony\Component\Config\Loader\LoaderResolver;
-  use Symfony\Component\Config\FileLocator;
-  use Tacker\Loader\JsonFileLoader;
-  use Tacker\Normalizer\ChainNormalizer;
-  
-  $resources = new ResourceCollection;
-  $loader = new JsonFileLoader(new FileLocator, $resources);
-  
-  $configurator = new Configurator(new LoaderResolver(array($loader)), new ChainNormalizer, $resources);
-  $configurator->configure(new Pimple, 'config.{ini,json,yml}');
+    <?php
+
+    use Symfony\Component\Config\FileLocator;
+    use Tacker\Loader\JsonFileLoader;
+    use Tacker\Loader\CacheLoader;
+    use Tacker\Loader\NormalizerLoader;
+    use Tacker\Normalizer\ChainNormalizer;
+    use Tacker\Configurator;
+
+    $resources = new ResourceCollection;
+    $loader = new JsonFileLoader(new FileLocator, $resources);
+
+    // add CacheLoader and NormalizerLoader
+    $loader = new CacheLoader(new NormalizerLoader($loader, new ChainNormalizer), $resources);
+
+    // load just the parameters
+    $parameters = $loader->load('config.{ini,json,yml}');
+
+    // or use cofigurator with pimple
+    $configurator = new Configurator($loader);
+    $configurator->configure(new Pimple, 'config.json');
 
 Replacing Values
 ~~~~~~~~~~~~~~~~
