@@ -1,20 +1,21 @@
 {
     "name"    : "flint/tacker",
-    "description" : "Easy configuration for Pimple based on Symfony Config.",
+    "description" : "Easy configuration based on Symfony Config",
     "license" : "MIT",
 
     "autoload" : {
-        "psr-0" : { "Tacker\\" : "src" }
+        "psr-0" : { "Tacker\\" : "src" },
+        "files" : ["src/Tacker/functions.php"]
     },
 
     "require" : {
         "php"            : ">=5.3.3",
-        "pimple/pimple"  : "~1.0",
         "symfony/config" : "~2.3"
     },
 
     "require-dev" : {
         "phpspec/phpspec" : "2.0.0-BETA4",
+        "pimple/pimple" : "~1.0",
         "symfony/yaml" : "~2.3"
     },
 
