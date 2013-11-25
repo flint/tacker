@@ -1,17 +1,11 @@
 <?php
 
-function tacker_array_map_recursive(array $array, $callback) {
-    $mapped = array();
+function tacker_array_map_recursive(array $array, $f) {
+    $map = array();
 
     foreach ($array as $k => $v) {
-        if (is_array($v)) {
-            $v = tacker_array_map_recursive($v, $callback);
-        } else {
-            $v = call_user_func($callback, $v);
-        }
-
-        $mapped[$k] = $v;
+        $map[$k] = is_array($v) ? tacker_array_map_recursive($v, $f) : call_user_func($f, $v);
     }
 
-    return $mapped;
+    return $map;
 }
