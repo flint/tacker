@@ -9,13 +9,13 @@ a reuseable config loader for Pimple.
 Features
 --------
 
-Works with ``yml``, ``ini``, and ``json``.
+Works with ``yml``, ``ini``, ``json``, and ``php``.
 
 * Inherit configurations files by using a special ``@import``
 * Mix different configuration formats while using ``@import``
 * Read configuration files are cached if a ``cache_dir`` is set and ``debug`` is set to false.
 * Simple for all users of Pimple such as Silex and Flint.
-* Only dependant on Pimple and Symfony Config.
+* Only depends on Symfony Config.
 
 Install
 -------
