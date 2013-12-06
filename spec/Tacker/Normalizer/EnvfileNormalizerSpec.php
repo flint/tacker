@@ -25,6 +25,13 @@ class EnvfileNormalizerSpec extends ObjectBehavior
         $this->normalize('#ENV_VAR_2#');
     }
 
+    function it_does_nothing_when_file_doesnt_exists($locator)
+    {
+        $locator->locate(Argument::any())->willReturn(null);
+
+        $this->normalize('#ENV_VAR#')->shouldReturn('#ENV_VAR#');
+    }
+
     function it_falls_back_on_dist_file($locator)
     {
         $locator->locate('Envfile')->willThrow(new \InvalidArgumentException)

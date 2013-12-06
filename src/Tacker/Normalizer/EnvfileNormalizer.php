@@ -35,7 +35,11 @@ class EnvfileNormalizer extends EnvironmentNormalizer
             return;
         }
 
-        $this->env = parse_ini_file($this->locate(), false, INI_SCANNER_RAW) ?: array();
+        if (!$file = $this->locate()) {
+            return;
+        }
+
+        $this->env = parse_ini_file($file, false, INI_SCANNER_RAW) ?: array();
         $this->env = array_change_key_case($this->env, CASE_UPPER);
     }
 
@@ -45,9 +49,7 @@ class EnvfileNormalizer extends EnvironmentNormalizer
             try {
                 return $this->locator->locate($file);
             } catch (\InvalidArgumentException $e) {
-                if ($i == 2) {
-                    throw $e;
-                }
+                // there is a possibility there is no file to load
             }
         }
     }
