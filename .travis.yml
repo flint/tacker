@@ -7,6 +7,7 @@ php:
 
 before_script:
     - "echo '{\"config\":{\"github-oauth\": {\"github.com\":\"fa354b2f030836334eac842f8fd69a03e353d247\"}}}' > ~/.composer/config.json"
+    - "composer require --dev phpspec/phpspec:~2.0 --no-update"
     - "composer install --dev"
 
 script: vendor/bin/phpspec run -fpretty -v
