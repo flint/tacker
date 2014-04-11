@@ -4,8 +4,7 @@
     "license" : "MIT",
 
     "autoload" : {
-        "psr-0" : { "Tacker\\" : "src" },
-        "files" : ["src/Tacker/functions.php"]
+        "psr-0" : { "Tacker\\" : "src" }
     },
 
     "require" : {

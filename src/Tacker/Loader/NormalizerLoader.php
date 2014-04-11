@@ -20,7 +20,7 @@ class NormalizerLoader extends \Symfony\Component\Config\Loader\Loader
     {
         $parameters = $this->loader->load($resource, $type);
 
-        return tacker_array_map_recursive($parameters, array($this, 'normalize'));
+        return array_map(array($this, 'normalize'), $parameters);
     }
 
     public function supports($resource, $type = null)
@@ -28,8 +28,12 @@ class NormalizerLoader extends \Symfony\Component\Config\Loader\Loader
         return $this->loader->supports($resource, $type);
     }
 
-    public function normalize($value)
+    private function normalize($value)
     {
-        return is_string($value) ? $this->normalizer->normalize($value) : $value;
+        if (is_array($value)) {
+            return array_map(array($this, 'normalize'), $value);
+        }
+
+        return $this->normalizer->normalize($value);
     }
 }
