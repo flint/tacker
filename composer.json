@@ -4,7 +4,7 @@
     "license" : "MIT",
 
     "autoload" : {
-        "psr-0" : { "Tacker\\" : "src" }
+        "psr-4" : { "Tacker\\" : "src" }
     },
 
     "require" : {
@@ -13,8 +13,8 @@
     },
 
     "require-dev" : {
-        "pimple/pimple" : "~1.0",
-        "symfony/yaml" : "~2.3"
+        "pimple/pimple" : "2.1.x-dev",
+        "symfony/yaml" : "~2.4"
     },
 
     "extra" : {

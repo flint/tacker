@@ -2,6 +2,8 @@
 
 namespace Tacker\Normalizer;
 
+use Pimple\Container;
+
 /**
  * @package Tacker
  */
@@ -10,9 +12,9 @@ class PimpleNormalizer implements \Tacker\Normalizer
     protected $pimple;
 
     /**
-     * @param Pimple $pimple
+     * @param Container $pimple
      */
-    public function __construct(\Pimple $pimple)
+    public function __construct(Container $pimple)
     {
         $this->pimple = $pimple;
     }

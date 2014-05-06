@@ -3,7 +3,7 @@
 namespace Tacker;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Pimple;
+use Pimple\Container;
 
 class Configurator
 {
@@ -14,7 +14,7 @@ class Configurator
         $this->loader = $loader;
     }
 
-    public function configure(Pimple $pimple, $resource)
+    public function configure(Container $pimple, $resource)
     {
         $parameters = $this->loader->load($resource);
 
