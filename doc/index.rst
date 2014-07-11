@@ -37,12 +37,13 @@ Getting Started
 
     <?php
 
+    use Pimple\Container;
     use Symfony\Component\Config\FileLocator;
-    use Tacker\Loader\JsonFileLoader;
+    use Tacker\Configurator;
     use Tacker\Loader\CacheLoader;
+    use Tacker\Loader\JsonFileLoader;
     use Tacker\Loader\NormalizerLoader;
     use Tacker\Normalizer\ChainNormalizer;
-    use Tacker\Configurator;
 
     $resources = new ResourceCollection;
     $loader = new JsonFileLoader(new FileLocator, $resources);
@@ -55,7 +56,7 @@ Getting Started
 
     // or use cofigurator with pimple
     $configurator = new Configurator($loader);
-    $configurator->configure(new Pimple, 'config.json');
+    $configurator->configure(new Container, 'config.json');
 
 Inheriting
 ~~~~~~~~~~
@@ -85,14 +86,15 @@ For environment variables it matches ``#CAPITALIZED_NAME#`` and for Pimple it ma
 .. code-block:: php
 
   <?php
-  
+
+  use Pimple\Container;
   use Tacker\Normalizer\EnvironmentNormalizer;
   use Tacker\Normalizer\PimpleNormalizer;
   use Tacker\Normalizer\ChainNormalizer;
-  
+
   $normalizer = new ChainNormalizer(array(
       new EnvironmentNormalizer,
-      new PimpleNormalizer(new Pimple),
+      new PimpleNormalizer(new Container),
   ));
 
 Tests
