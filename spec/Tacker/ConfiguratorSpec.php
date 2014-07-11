@@ -16,7 +16,7 @@ class ConfiguratorSpec extends ObjectBehavior
     }
 
     /**
-     * @param Pimple $pimple
+     * @param Pimple\Container $pimple
      */
     function it_adds_parameters_on_pimple($pimple, $loader)
     {

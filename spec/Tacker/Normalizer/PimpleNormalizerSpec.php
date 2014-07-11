@@ -7,7 +7,7 @@ use Prophecy\Argument;
 class PimpleNormalizerSpec extends \PhpSpec\ObjectBehavior
 {
     /**
-     * @param Pimple $pimple
+     * @param Pimple\Container $pimple
      */
     function let($pimple)
     {
