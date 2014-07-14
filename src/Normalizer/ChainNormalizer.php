@@ -9,14 +9,14 @@ use Tacker\Normalizer;
  */
 class ChainNormalizer implements \Tacker\Normalizer
 {
-    protected $normalizers = array();
+    private $normalizers = [];
 
     /**
      * @param array $normalizers
      */
-    public function __construct(array $normalizers = array())
+    public function __construct(array $normalizers = [])
     {
-        array_map(array($this, 'add'), $normalizers);
+        array_map([$this, 'add'], $normalizers);
     }
 
     /**

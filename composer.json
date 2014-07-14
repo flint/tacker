@@ -8,12 +8,12 @@
     },
 
     "require" : {
-        "php"            : ">=5.3.3",
+        "php"            : "~5.4",
         "symfony/config" : "~2.3"
     },
 
     "require-dev" : {
-        "pimple/pimple" : "2.1.x-dev",
+        "pimple/pimple" : "~2.1",
         "symfony/yaml" : "~2.4"
     },
 

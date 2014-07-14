@@ -9,7 +9,7 @@ use Pimple\Container;
  */
 class PimpleNormalizer implements \Tacker\Normalizer
 {
-    protected $pimple;
+    private $pimple;
 
     /**
      * @param Container $pimple
@@ -29,7 +29,7 @@ class PimpleNormalizer implements \Tacker\Normalizer
             return isset($this->pimple[$match[1]]) ? $this->pimple[$match[1]] : $match[0];
         }
 
-        $result = preg_replace_callback('{%%|%([a-z0-9_.]+)%}', array($this, 'callback'), $value, -1, $count);
+        $result = preg_replace_callback('{%%|%([a-z0-9_.]+)%}', [$this, 'callback'], $value, -1, $count);
 
         return $count ? $result : $value;
     }

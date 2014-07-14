@@ -7,7 +7,7 @@ use Pimple\Container;
 
 class Configurator
 {
-    protected $loader;
+    private $loader;
 
     public function __construct(LoaderInterface $loader)
     {

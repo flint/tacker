@@ -6,7 +6,7 @@ use Symfony\Component\Config\Resource\ResourceInterface;
 
 class ResourceCollection
 {
-    protected $resources = array();
+    private $resources = [];
 
     public function add(ResourceInterface $resource)
     {

@@ -7,8 +7,8 @@ use Tacker\Normalizer;
 
 class NormalizerLoader extends \Symfony\Component\Config\Loader\Loader
 {
-    protected $normalizer;
-    protected $loader;
+    private $normalizer;
+    private $loader;
 
     public function __construct(LoaderInterface $loader, Normalizer $normalizer)
     {
@@ -20,7 +20,7 @@ class NormalizerLoader extends \Symfony\Component\Config\Loader\Loader
     {
         $parameters = $this->loader->load($resource, $type);
 
-        return array_map(array($this, 'normalize'), $parameters);
+        return array_map([$this, 'normalize'], $parameters);
     }
 
     public function supports($resource, $type = null)
@@ -31,7 +31,7 @@ class NormalizerLoader extends \Symfony\Component\Config\Loader\Loader
     private function normalize($value)
     {
         if (is_array($value)) {
-            return array_map(array($this, 'normalize'), $value);
+            return array_map([$this, 'normalize'], $value);
         }
 
         return $this->normalizer->normalize($value);

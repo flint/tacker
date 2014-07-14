@@ -6,8 +6,8 @@ use Symfony\Component\Config\FileLocatorInterface;
 
 class EnvfileNormalizer extends EnvironmentNormalizer
 {
-    protected $env;
-    protected $locator;
+    private $env;
+    private $locator;
 
     public function __construct(FileLocatorInterface $locator)
     {
@@ -39,13 +39,13 @@ class EnvfileNormalizer extends EnvironmentNormalizer
             return;
         }
 
-        $this->env = parse_ini_file($file, false, INI_SCANNER_RAW) ?: array();
+        $this->env = parse_ini_file($file, false, INI_SCANNER_RAW) ?: [];
         $this->env = array_change_key_case($this->env, CASE_UPPER);
     }
 
     protected function locate()
     {
-        foreach (array('Envfile', 'Envfile.dist') as $i => $file) {
+        foreach (['Envfile', 'Envfile.dist'] as $i => $file) {
             try {
                 return $this->locator->locate($file);
             } catch (\InvalidArgumentException $e) {

@@ -12,8 +12,8 @@ use Tacker\ResourceCollection;
  */
 abstract class AbstractLoader extends FileLoader
 {
-    protected $resources;
     protected $locator;
+    private $resources;
 
     public function __construct(
         FileLocatorInterface $locator,
@@ -39,7 +39,7 @@ abstract class AbstractLoader extends FileLoader
         }
 
         $imports = (array) $parameters['@import'];
-        $inherited = array();
+        $inherited = [];
 
         unset($parameters['@import']);
 

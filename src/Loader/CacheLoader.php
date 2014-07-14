@@ -11,10 +11,10 @@ use Tacker\ResourceCollection;
  */
 class CacheLoader extends \Symfony\Component\Config\Loader\Loader
 {
-    protected $loader;
-    protected $resources;
-    protected $debug = false;
-    protected $cacheDir;
+    private $loader;
+    private $resources;
+    private $debug = false;
+    private $cacheDir;
 
     public function __construct(LoaderInterface $loader, ResourceCollection $resources)
     {
