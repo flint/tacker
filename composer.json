@@ -13,8 +13,8 @@
     },
 
     "require-dev" : {
-        "pimple/pimple" : "~2.1",
-        "symfony/yaml" : "~2.4"
+        "pimple/pimple" : "~3.0",
+        "symfony/yaml"  : "~2.4"
     },
 
     "extra" : {
