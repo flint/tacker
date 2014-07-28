@@ -51,6 +51,8 @@ final class LoaderBuilder
         $this->normalizerConfigured = true;
 
         $callable($this->normalizer);
+
+        return $this;
     }
 
     public function configureLoaders(callable $callable)
@@ -58,16 +60,22 @@ final class LoaderBuilder
         $this->resolverConfigured = true;
 
         $callable($this->resolver, $this->locator, $this->resources);
+
+        return $this;
     }
 
     public function setCacheDir($cacheDir)
     {
         $this->cacheDir = $cacheDir;
+
+        return $this;
     }
 
     public function setDebug($debug)
     {
         $this->debug = $debug;
+
+        return $this;
     }
 
     public function build()
@@ -98,6 +106,8 @@ final class LoaderBuilder
         $this->resolver->addLoader(new JsonFileLoader($this->locator, $this->resources));
         $this->resolver->addLoader(new PhpFileLoader($this->locator, $this->resources));
         $this->resolver->addLoader(new IniFileLoader($this->locator, $this->resources));
+
+        return $this;
     }
 
     public function addDefaultNormalizers()
@@ -106,6 +116,8 @@ final class LoaderBuilder
 
         $this->normalizer->add(new EnvironmentNormalizer);
         $this->normalizer->add(new EnvfileNormalizer($this->locator));
+
+        return $this;
     }
 
     private function createNormalizerLoader()
