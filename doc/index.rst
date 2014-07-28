@@ -58,6 +58,27 @@ Getting Started
     $configurator = new Configurator($loader);
     $configurator->configure(new Container, 'config.json');
 
+Fortunately there exists a better way of doing all of this.
+
+.. code-block:: php
+
+    <?php
+
+    use Tacker\LoaderBuilder;
+
+    $loader = LoaderBuilder::create($paths)
+        ->build()
+    ;
+
+    $configurator = new Configurator($loader);
+    $configurator->configure($container, 'config.json');
+
+The LoaderBuilder will try and setup sane defaults. Which means all the loaders for php, ini, json and yml if 
+``Symfony\Component\Yaml\Yaml`` is available.
+
+The builder contains methods for cofiguring the different parts, but configuring normalizers or loaders will 
+remove the default unless you call ``$builder->addDefaultNormalizers()`` and ``$builder->addDefaultLoaders()``.
+
 Inheriting
 ~~~~~~~~~~
 
