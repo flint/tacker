@@ -25,6 +25,7 @@ final class LoaderBuilder
     private $paths;
     private $normalizer;
     private $resolver;
+    private $resources;
     private $locator;
     private $debug;
     private $cacheDir;
