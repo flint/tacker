@@ -93,10 +93,6 @@ it would look something like:
         - another.yaml
         - third.ini
 
-.. note::
-
-    ``IniFileLoader`` does only support inheriting a single file, this is a limitation of the ini format.
-
 Replacing Values
 ~~~~~~~~~~~~~~~~
 
