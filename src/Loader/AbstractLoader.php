@@ -32,7 +32,9 @@ abstract class AbstractLoader extends FileLoader
         return $this->parse($this->read($resource), $resource);
     }
 
-    protected function parse(array $parameters, $resource)
+    abstract protected function read($resource);
+
+    private function parse(array $parameters, $resource)
     {
         if (!isset($parameters['@import'])) {
             return $parameters;
@@ -44,13 +46,16 @@ abstract class AbstractLoader extends FileLoader
         unset($parameters['@import']);
 
         foreach ($imports as $import) {
-            $this->setCurrentDir(dirname($import));
-
-            $inherited = array_replace($inherited, $this->import($import, null, false, $resource));
+            $inherited = $this->parseImport($import, $resource, $inherited);
         }
 
         return array_replace($inherited, $parameters);
     }
 
-    abstract protected function read($resource);
+    private function parseImport($import, $resource, $inherited)
+    {
+        $this->setCurrentDir(dirname($import));
+
+        return array_replace($inherited, $this->import($import, null, false, $resource));
+    }
 }
