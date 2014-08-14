@@ -97,13 +97,7 @@ final class LoaderBuilder
             $this->addDefaultNormalizers();
         }
 
-        $loader = $this->createNormalizerLoader();
-
-        if ($this->configuration) {
-            $loader = new ProcessorLoader($loader, $this->configuration);
-        }
-
-        $loader = new CacheLoader($loader, $this->resources);
+        $loader = new CacheLoader($this->createLoaderGraph(), $this->resources);
         $loader->setCacheDir($this->cacheDir);
         $loader->setDebug($this->debug);
 
@@ -133,6 +127,17 @@ final class LoaderBuilder
         $this->normalizer->add(new EnvfileNormalizer($this->locator));
 
         return $this;
+    }
+
+    private function createLoaderGraph()
+    {
+        $loader = $this->createNormalizerLoader();
+
+        if ($this->configuration) {
+            return new ProcessorLoader($loader, $this->configuration);
+        }
+
+        return $loader;
     }
 
     private function createNormalizerLoader()
