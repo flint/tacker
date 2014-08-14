@@ -32,6 +32,9 @@ class CacheLoader extends \Symfony\Component\Config\Loader\Loader
         return $this->cacheDir;
     }
 
+    /**
+     * @param boolean $debug
+     */
     public function setDebug($debug)
     {
         $this->debug = $debug;

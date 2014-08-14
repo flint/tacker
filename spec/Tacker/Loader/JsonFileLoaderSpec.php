@@ -2,7 +2,6 @@
 
 namespace spec\Tacker\Loader;
 
-use Prophecy\Argument;
 use Symfony\Component\Config\FileLocator;
 
 class JsonFileLoaderSpec extends \PhpSpec\ObjectBehavior

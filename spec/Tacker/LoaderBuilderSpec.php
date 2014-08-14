@@ -3,7 +3,6 @@
 namespace spec\Tacker;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class LoaderBuilderSpec extends ObjectBehavior
 {
