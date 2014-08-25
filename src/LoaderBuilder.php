@@ -22,7 +22,6 @@ use Tacker\Normalizer\EnvironmentNormalizer;
  */
 final class LoaderBuilder
 {
-    private $paths;
     private $normalizer;
     private $resolver;
     private $resources;
