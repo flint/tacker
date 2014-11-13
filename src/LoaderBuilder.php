@@ -46,6 +46,13 @@ final class LoaderBuilder
         return new self($paths, $cacheDir, $debug);
     }
 
+    public function configureLocator(callable $callable)
+    {
+        $callable($this->locator);
+
+        return $this;
+    }
+
     public function configureNormalizers(callable $callable)
     {
         $this->normalizerConfigured = true;
