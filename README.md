@@ -11,8 +11,8 @@ It is easy to get started just look at [it's documentation](http://flint.readthe
 Tests
 -----
 
-Tacker is spec tested with PhpSpec. You run the tests with:
+Tacker is spec tested with PhpSpec. You run the tests with the following command (assuming it is installed):
 
 ``` bash
-$ ./vendor/bin/phpspec run
+$ phpspec run
 ```
