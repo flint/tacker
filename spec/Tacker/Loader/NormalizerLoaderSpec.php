@@ -3,7 +3,6 @@
 namespace spec\Tacker\Loader;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class NormalizerLoaderSpec extends ObjectBehavior
 {

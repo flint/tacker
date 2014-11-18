@@ -3,12 +3,14 @@
 namespace Tacker;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Tacker\Loader\CacheLoader;
 use Tacker\Loader\IniFileLoader;
 use Tacker\Loader\JsonFileLoader;
 use Tacker\Loader\NormalizerLoader;
+use Tacker\Loader\ProcessorLoader;
 use Tacker\Loader\PhpFileLoader;
 use Tacker\Loader\YamlFileLoader;
 use Tacker\Normalizer\ChainNormalizer;
@@ -25,6 +27,7 @@ final class LoaderBuilder
     private $normalizer;
     private $resolver;
     private $resources;
+    private $configuration;
     private $locator;
     private $debug;
     private $cacheDir;
@@ -85,6 +88,11 @@ final class LoaderBuilder
         return $this;
     }
 
+    public function setConfiguration(ConfigurationInterface $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     public function build()
     {
         if (false == $this->resolverConfigured) {
@@ -95,7 +103,7 @@ final class LoaderBuilder
             $this->addDefaultNormalizers();
         }
 
-        $loader = new CacheLoader($this->createNormalizerLoader(), $this->resources);
+        $loader = new CacheLoader($this->createLoaderGraph(), $this->resources);
         $loader->setCacheDir($this->cacheDir);
         $loader->setDebug($this->debug);
 
@@ -125,6 +133,17 @@ final class LoaderBuilder
         $this->normalizer->add(new EnvfileNormalizer($this->locator));
 
         return $this;
+    }
+
+    private function createLoaderGraph()
+    {
+        $loader = $this->createNormalizerLoader();
+
+        if ($this->configuration) {
+            return new ProcessorLoader($loader, $this->configuration);
+        }
+
+        return $loader;
     }
 
     private function createNormalizerLoader()

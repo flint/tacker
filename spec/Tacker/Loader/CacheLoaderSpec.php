@@ -8,7 +8,6 @@ class CacheLoaderSpec extends \PhpSpec\ObjectBehavior
 {
     /**
      * @param Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @param Tacker\Normalizer $normalizer
      * @param Tacker\ResourceCollection $resources
      */
     function let($loader, $resources)

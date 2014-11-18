@@ -2,7 +2,6 @@
 
 namespace spec\Tacker\Loader;
 
-use Prophecy\Argument;
 use Symfony\Component\Config\FileLocator;
 
 class YamlFileLoaderSpec extends \PhpSpec\ObjectBehavior
