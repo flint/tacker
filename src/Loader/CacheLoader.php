@@ -58,7 +58,7 @@ class CacheLoader extends \Symfony\Component\Config\Loader\Loader
         }
 
         if (!isset($parameters)) {
-            require (string) $cache;
+            require method_exists($cache, 'getPath') ? $cache->getPath() : (string) $cache;
         }
 
         return $parameters;
