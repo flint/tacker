@@ -32,6 +32,10 @@ class ChainNormalizer implements \Tacker\Normalizer
      */
     public function normalize($value)
     {
+        if (!is_scalar($value)) {
+            return $value;
+        }
+
         foreach ($this->normalizers as $normalizer) {
             $value = $normalizer->normalize($value);
         }
