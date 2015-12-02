@@ -32,7 +32,6 @@ class CacheLoaderSpec extends \PhpSpec\ObjectBehavior
         $this->setCacheDir(sys_get_temp_dir() . '/tacker');
 
         $resources->all()->willReturn(array($resource));
-        $resource->isFresh(Argument::any())->willReturn(false);
 
         $loader->load('debug.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalledTimes(2);
