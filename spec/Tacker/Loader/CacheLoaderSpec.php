@@ -19,6 +19,11 @@ class CacheLoaderSpec extends \PhpSpec\ObjectBehavior
         @array_map('unlink', glob(sys_get_temp_dir() . '/tacker/*'));
     }
 
+    function letgo()
+    {
+        @array_map('unlink', glob(sys_get_temp_dir() . '/tacker/*'));
+    }
+
     function it_is_symfony_loader()
     {
         $this->shouldHaveType('Symfony\Component\Config\Loader\Loader');
@@ -33,12 +38,14 @@ class CacheLoaderSpec extends \PhpSpec\ObjectBehavior
         $this->setCacheDir(sys_get_temp_dir() . '/tacker');
 
         $resources->all()->willReturn(array($resource));
-        $resource->isFresh(Argument::any())->willReturn(false);
 
         $loader->load('debug.json')->willReturn(array('hello' => 'world'))
             ->shouldBeCalledTimes(2);
 
         $this->load('debug.json');
+
+        @array_map('touch', glob(sys_get_temp_dir() . '/tacker/*'));
+
         $this->load('debug.json');
     }
 
